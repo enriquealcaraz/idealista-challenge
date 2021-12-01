@@ -1,0 +1,14 @@
+calculate-store:
+    path: /calculate
+    controller: App\Controller\Api\CalculateScoreController
+    methods: [GET]
+    
+public-listing:
+    path: /listing
+    controller: App\Controller\Api\PublicListingController
+    methods: [GET]
+    
+quality-ad:
+    path: /quality
+    controller: App\Controller\Api\QualityAdController
+    methods: [GET]

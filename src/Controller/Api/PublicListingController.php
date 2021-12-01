@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Api;
+namespace App\Controller\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-final class CalculateScoreController
+final class PublicListingController
 {
     public function __invoke(): JsonResponse
     {

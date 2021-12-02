@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Application\PublicListingUseCase;
 
 final class PublicListingController
 {
-    public function __invoke(): JsonResponse
+    private $publicListing;
+    
+    public function __construct(PublicListingUseCase $publicListing)
     {
-        return new JsonResponse([]);
+        $this->publicListing = $publicListing;
+    }
+
+    public function __invoke(): JsonResponse
+    {        
+        return new JsonResponse($this->publicListing->__invoke());
     }
 }

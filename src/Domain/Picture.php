@@ -4,12 +4,48 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-final class Picture
+use JsonSerializable;
+
+final class Picture implements JsonSerializable
 {
+    public const TYPE_HD = "HD";
+    public const TYPE_SD = "SD";
+    
+    private int $id;
+    private string $url;
+    private string $quality;
+            
     public function __construct(
-        private int $id,
-        private String $url,
-        private String $quality,
+        int $id,
+        string $url,
+        string $quality,
     ) {
+        $this->id = $id;
+        $this->url = $url;
+        $this->quality = $quality;
+    }
+    
+    public function quality(): string
+    {
+        return $this->quality;
+    }
+    
+    public function id(): int
+    {
+        return $this->id;
+    }
+    
+    public function url(): string
+    {
+        return $this->url;
+    }
+    
+    public function jsonSerialize()
+    {
+        return [
+            "id" => $this->id(),
+            "url" => $this->url(),
+            "quality" => $this->quality()
+        ];
     }
 }

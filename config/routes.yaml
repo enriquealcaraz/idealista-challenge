@@ -10,5 +10,5 @@ public-listing:
     
 quality-ad:
     path: /quality
-    controller: App\Controller\Api\QualityAdController
+    controller: App\Controller\Api\QualityListingController
     methods: [GET]

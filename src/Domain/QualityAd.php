@@ -5,28 +5,24 @@ declare(strict_types=1);
 namespace App\Domain;
 
 use DateTimeImmutable;
+use JsonSerializable;
 
-final class Ad
+final class QualityAd implements JsonSerializable
 {
-    public const FLAT = "FLAT";
-    public const CHALET = "CHALET";
-    public const GARAGE = "GARAGE";
-    public const CUT_OFF_MARK = 40;
-    
     private int $id;
     private string $typology;
     private string $description;
-    private array $pictures;
+    private array $pictureUrls;
     private int $houseSize;
     private ?int $gardenSize;
     private ?int $score;
     private ?DateTimeImmutable $irrelevantSince;
-           
+            
     public function __construct(
         int $id,
         string $typology,
         string $description,
-        array $pictures,
+        array $pictureUrls,
         int $houseSize,
         ?int $gardenSize = null,
         ?int $score = null,
@@ -35,7 +31,7 @@ final class Ad
         $this->id = $id;
         $this->typology = $typology;
         $this->description = $description;
-        $this->pictures = $pictures;
+        $this->pictureUrls = $pictureUrls;
         $this->houseSize = $houseSize;
         $this->gardenSize = $gardenSize;
         $this->score = $score;
@@ -57,9 +53,9 @@ final class Ad
         return $this->description;
     }
     
-    public function pictures(): array
+    public function pictureUrls(): array
     {
-        return $this->pictures;
+        return $this->pictureUrls;
     }
     
     public function houseSize(): int
@@ -82,26 +78,17 @@ final class Ad
         return $this->irrelevantSince;
     }
     
-    public function winScore($points): void
+    public function jsonSerialize()
     {
-        if (($this->score + $points)  >= 100) {
-            $this->score = 100;
-        } else {
-            $this->score = $this->score + $points;
-        }
-    }
-    
-    public function loseScore($points): void
-    {
-        if (($this->score - $points)  <= 0) {
-            $this->score = 0;
-        } else {
-            $this->score = $this->score - $points;
-        }
-    }
-    
-    public function markAsIrrelevant(): void
-    {
-        $this->irrelevantSince = new DateTimeImmutable('now');
+        return [
+            "id" => $this->id(),
+            "typology" => $this->typology(),
+            "description" => $this->description(),
+            "picturesUrls" => $this->pictureUrls(),
+            "houseSize" => $this->houseSize(),
+            "gardenSize" => $this->gardenSize(),
+            "score" => $this->score(),
+            "irrelevantSince" => $this->irrelevantSince()
+        ];
     }
 }

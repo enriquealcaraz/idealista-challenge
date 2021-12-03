@@ -7,8 +7,9 @@ namespace App\Infrastructure\Persistence;
 use App\Domain\Ad;
 use App\Domain\Picture;
 use Symfony\Component\Filesystem\Filesystem;
+use App\Domain\Repository\PersistenceRepository;
 
-final class InFileSystemPersistence
+final class InFileSystemPersistence implements PersistenceRepository
 {
     public const FILE_PATH_ADS = __DIR__ . "/adsdb.txt";
     public const FILE_PATH_PICTURES = __DIR__ . "/picturesdb.txt";
@@ -68,7 +69,7 @@ final class InFileSystemPersistence
         return unserialize(file_get_contents(self::FILE_PATH_PICTURES));
     }
     
-    public function updateAds($adsList): void
+    public function updateAds(array $adsList): void
     {
         $this->fileSystem->remove(self::FILE_PATH_ADS);
         

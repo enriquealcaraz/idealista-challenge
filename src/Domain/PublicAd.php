@@ -61,7 +61,7 @@ final class PublicAd implements JsonSerializable
         return $this->gardenSize;
     }
     
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             "id" => $this->id(),

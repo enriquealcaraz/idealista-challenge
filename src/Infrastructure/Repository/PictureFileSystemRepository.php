@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository;
 
-use App\Infrastructure\Persistence\InFileSystemPersistence;
+use App\Domain\Repository\PersistenceRepository;
 use App\Domain\Repository\PictureRepository;
 use App\Domain\Picture;
 
 final class PictureFileSystemRepository implements PictureRepository
 {
-    private InFileSystemPersistence $inFileSystemPersistence;
+    private PersistenceRepository $persistenceRepository;
     
-    public function __construct(InFileSystemPersistence $inFileSystemPersistence)
+    public function __construct(PersistenceRepository $persistenceRepository)
     {
-        $this->inFileSystemPersistence = $inFileSystemPersistence;
+        $this->persistenceRepository = $persistenceRepository;
     }
     
     public function findById($pictureId): ?Picture
     {
-        $pictures = $this->inFileSystemPersistence->findAllPictures();
+        $pictures = $this->persistenceRepository->findAllPictures();
         foreach($pictures as $picture) {
             if ($picture->id() == $pictureId) {
                 return $picture;

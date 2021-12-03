@@ -6,6 +6,7 @@ namespace App\Controller\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Application\PublicListingUseCase;
+use Exception;
 
 final class PublicListingController
 {
@@ -17,7 +18,11 @@ final class PublicListingController
     }
 
     public function __invoke(): JsonResponse
-    {        
-        return new JsonResponse($this->publicListing->__invoke());
+    {
+        try {
+            return new JsonResponse($this->publicListing->__invoke(), JsonResponse::HTTP_OK);
+        } catch (Exception $ex) {
+            return new JsonResponse($ex->getMessage(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

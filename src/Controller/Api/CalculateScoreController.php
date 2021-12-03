@@ -6,7 +6,7 @@ namespace App\Controller\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Application\CalculateScoreUseCase;
-
+use Exception;
 
 final class CalculateScoreController
 {
@@ -19,7 +19,11 @@ final class CalculateScoreController
     
     public function __invoke(): JsonResponse
     {
-        $this->calculateScore->__invoke();
-        return new JsonResponse(null, JsonResponse::HTTP_OK);
+        try {
+            $this->calculateScore->__invoke();
+            return new JsonResponse(null, JsonResponse::HTTP_OK);
+        } catch (Exception $ex) {
+            return new JsonResponse($ex->getMessage(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }        
     }
 }

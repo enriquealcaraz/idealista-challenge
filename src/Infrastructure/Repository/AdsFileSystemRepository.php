@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository;
 
-use App\Infrastructure\Persistence\InFileSystemPersistence;
+use App\Domain\Repository\PersistenceRepository;
 use App\Domain\Repository\AdsRepository;
 use App\Domain\Repository\PictureRepository;
 use App\Domain\PublicAd;
@@ -13,34 +13,45 @@ use App\Domain\Ad;
 
 final class AdsFileSystemRepository implements AdsRepository
 {
-    private InFileSystemPersistence $inFileSystemPersistence;
+    private PersistenceRepository $persistenceRepository;
     private PictureRepository $pictureRepository;
     
     public function __construct(
-        InFileSystemPersistence $inFileSystemPersistence,
+        PersistenceRepository $persistenceRepository,
         PictureRepository $pictureRepository
     ) {
-        $this->inFileSystemPersistence = $inFileSystemPersistence;
+        $this->persistenceRepository = $persistenceRepository;
         $this->pictureRepository = $pictureRepository;
     }
     
     public function listAdsForIdealistUsers(): array
     {
-        $ads = $this->inFileSystemPersistence->findAllAds();
+        $ads = $this->persistenceRepository->findAllAds();
+        
+        usort($ads, function($first, $second) {
+            return ($first->score() < $second->score()) ? 1 : -1;
+        });
         
         $adsForIdealistUsers = [];
         foreach ($ads as $ad) {
             if ($ad->score() > Ad::CUT_OFF_MARK) {
-                $adsForIdealistUsers[] = new PublicAd($ad->id(), $ad->typology(), $ad->description(), $this->extractUrlPicturesFromAd($ad), $ad->houseSize(), $ad->gardenSize());
+                $adsForIdealistUsers[] = new PublicAd(
+                    $ad->id(),
+                    $ad->typology(),
+                    $ad->description(),
+                    $this->extractUrlPicturesFromAd($ad),
+                    $ad->houseSize(),
+                    $ad->gardenSize()
+                );
             }
-        }        
-
+        }
+        
         return $adsForIdealistUsers;
     }
     
     public function listAdsForQualityUsers(): array
     {
-        $ads = $this->inFileSystemPersistence->findAllAds();
+        $ads = $this->persistenceRepository->findAllAds();
         
         $adsForQualityUsers = [];
         foreach ($ads as $ad) {
@@ -63,15 +74,15 @@ final class AdsFileSystemRepository implements AdsRepository
     
     public function listAll(): array
     {
-        return $this->inFileSystemPersistence->findAllAds();
+        return $this->persistenceRepository->findAllAds();
     }
     
-    public function update($adsList): void
+    public function update(array $adsList): void
     {
-        $this->inFileSystemPersistence->updateAds($adsList);
+        $this->persistenceRepository->updateAds($adsList);
     }
     
-    private function extractUrlPicturesFromAd($ad): array
+    private function extractUrlPicturesFromAd(Ad $ad): array
     {
         $pictures = [];
         foreach ($ad->pictures() as $pictureId) {

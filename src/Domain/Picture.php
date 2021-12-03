@@ -40,7 +40,7 @@ final class Picture implements JsonSerializable
         return $this->url;
     }
     
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             "id" => $this->id(),

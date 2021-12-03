@@ -78,7 +78,7 @@ final class QualityAd implements JsonSerializable
         return $this->irrelevantSince;
     }
     
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             "id" => $this->id(),

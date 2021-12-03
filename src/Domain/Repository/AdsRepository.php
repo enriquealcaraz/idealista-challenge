@@ -12,5 +12,5 @@ interface AdsRepository
     
     public function listAll(): array;
     
-    public function update($adsList): void;
+    public function update(array $adsList): void;
 }

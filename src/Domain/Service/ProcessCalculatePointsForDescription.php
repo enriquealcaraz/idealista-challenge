@@ -20,7 +20,7 @@ final class ProcessCalculatePointsForDescription implements CalculatePointsForDe
 
         $wordCount = str_word_count($ad->description(), 0, $this->specialChars);
         if ($ad->typology() == Ad::FLAT) {            
-            ($wordCount >= 29 && $wordCount <= 49) ? $ad->winScore(10) : null;            
+            ($wordCount >= 20 && $wordCount <= 49) ? $ad->winScore(10) : null;            
             ($wordCount >= 50) ? $ad->winScore(30) : null;
         }
         

@@ -47,11 +47,6 @@ final class CalculateScoreUseCase
             
             $adCompleted = $this->runCalculator($adEntity);
             array_push($adsList, $adCompleted);
-            
-            echo "<pre>";
-            print_r($adCompleted);
-            echo "</pre>";
-            echo "<hr />";
         }
         
         $this->adsRepository->update($adsList);

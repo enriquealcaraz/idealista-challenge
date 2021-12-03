@@ -6,6 +6,7 @@ namespace App\Controller\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Application\QualityListingUseCase;
+use Exception;
 
 final class QualityListingController
 {
@@ -18,6 +19,10 @@ final class QualityListingController
     
     public function __invoke(): JsonResponse
     {
-        return new JsonResponse($this->qualityListing->__invoke());
+        try {
+            return new JsonResponse($this->qualityListing->__invoke());
+        } catch (Exception $ex) {
+            return new JsonResponse($ex->getMessage(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace App\Application;
 
 use App\Domain\Repository\AdsRepository;
 
-class QualityListingUseCase
+final class QualityListingUseCase
 {
     private $adsRepository;
     

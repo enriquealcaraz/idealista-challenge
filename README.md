@@ -1,3 +1,7 @@
+# Propuesta de solución para el idealista challenge
+
+- Se han modificado los constructores en php8 debido a que todavía no son compatibles con netbeans 12.2
+
 # Reto: Servicio para gestión de calidad de los anuncios
 
 Este repositorio contiene un API parcialmente desarrollada para desarrollar un servicio que se encargue de medir la calidad de los anuncios. Tu objetivo será implementar las historias de usuario que se describen más adelante.

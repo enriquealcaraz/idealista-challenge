@@ -1,6 +1,12 @@
 # Propuesta de solución para el idealista challenge
 
 - Se han modificado los constructores en php8 debido a que todavía no son compatibles con netbeans 12.2
+- Endpoint para el cálculo: /calculate
+- Endpoint para el listado de ad para usuarios: /listing
+- Endpoint para el listado de ad para calidad: /quality
+- Se usa la dependencia FileSystem para persistir los datos.
+- Ejecución de test unitarios: php bin/phpunit
+- No se han realizado test de aceptación, con los test unitarios he pensado que era suficiente.
 
 # Reto: Servicio para gestión de calidad de los anuncios
 

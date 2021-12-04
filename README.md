@@ -1,6 +1,7 @@
 # Propuesta de solución para el idealista challenge
 
 - Se han modificado los constructores en php8 debido a que todavía no son compatibles con netbeans 12.2
+- Se ha interpretado que tanto publicAd como qualityAd eran entidades de dominio.
 - Endpoint para el cálculo: /calculate
 - Endpoint para el listado de ad para usuarios: /listing
 - Endpoint para el listado de ad para calidad: /quality
